@@ -1,30 +1,41 @@
-onload();
+const body = document.querySelector("body");
 
-function buildGrid (rowLength = 16) {
-     parent = document.getElementById("container");
+/* const div1 = document.createElement("div");
+body.appendChild(div1); */
+const div1 = document.getElementById("container");
 
-     var div = document.createElement("DIV");
-     document.getElementById("container").appendChild(div);
-     div.innerHTML = "Hello World";
+function squareNumber(number){
+    return number**2;
+}
 
-    while(parent.children.length) parent.removeChild(parent.children[0]);
+// Creation of Grid
 
-    div.style.backgroundColor = "white";
-    div.style.width = (100/rowLength) + "%";
-    div.style.height = (100/rowLength) + "%"; 
+function gridCreation(argument){
 
-    for (let i = 0; i < rowLength**2; i++){
-        let clone = parent.cloneNode();
-        clone.addEventListener('mouseover', function(){this.style.backgroundColor = "black";});
-        parent.appendChild(clone);
+    while(div1.firstChild){
+        div1.removeChild(div1.lastChild);
+    }
+
+// Rows and Columns generation
+
+    div1.style.gridTemplateRows = `repeat(${argument}, 1fr)`;
+    div1.style.gridTemplateColumns = `repeat(${argument}, 1fr)`;    
+
+    for (let i = 0; i < squareNumber(argument); i++){
+        let div2 = document.createElement("div");
+
+        div2.id = `square-div-${i}`;
+        div2.classList.add("square-div");
+
+        div2.addEventListener('mouseover', function(e){
+            div2.style.backgroundColor = "black";
+        });
+        div1.appendChild(div2);
     }
 }
 
-function onload(){
-    buildGrid();
-    document.getElementById("reset").addEventListener('click', resetGrid);
-    document.getElementById("clear").addEventListener('click', clearGrid);
-}
+document.getElementById("reset").addEventListener('click', resetGrid);
+document.getElementById("clear").addEventListener('click', clearGrid);
 
 function resetGrid(){
     let input = prompt("Enter the size of row (between 16 and 100)");
@@ -32,13 +43,15 @@ function resetGrid(){
     if(!input)
      return;
 
-    if(typeof('input') !== "number" || input < 1 || input >100)
+    else if(typeof +input!== "number" || input < 16 || input >100)
      return resetGrid();
 
-    buildGrid(input);
+    else gridCreation(input);
 }
 
 function clearGrid(){
     let abc = Math.sqrt(document.getElementById("container").children.length);
-    buildGrid(abc);
+    gridCreation(abc);
 }
+
+gridCreation(16);

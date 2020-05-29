@@ -60,7 +60,8 @@ body{
 
 .active:hover {
     background-color: rgb(35, 6, 139);
-} */
+}
+*/
 
 #footer{
     display: flex;
@@ -85,7 +86,13 @@ body{
 
 
 
+.square-div{
+    background-color: #fefefe;
+}
 
+.square-div:hover{
+    background-color: #efefef;
+}
 
 
 
